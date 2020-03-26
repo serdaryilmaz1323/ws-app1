@@ -3,47 +3,78 @@ import {
   IonCol,
   IonCard,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
   IonItem,
   IonIcon,
   IonLabel,
+  IonRow,
+  IonNote,
 } from '@ionic/react';
-import { locationOutline, businessOutline, key } from 'ionicons/icons';
+import { checkmarkDoneOutline, sendOutline, albumsOutline } from 'ionicons/icons';
+import { locationOutline, businessOutline } from 'ionicons/icons';
 import { IUser } from '../../../api/models/user.model';
+import { useHistory } from 'react-router';
 
 type Props = {
   user: IUser;
-  clickHandler: () => void;
 };
 
 const UserListItem = (props: Props) => {
+  const history = useHistory();
+
+  const gotoTodos = () => {
+    const url = `/user/${props.user.id}/todos`;
+    history.push(url);
+  };
+
+  const gotoAlbums = () => {
+    const url = `/user/${props.user.id}/albums`;
+    history.push(url);
+  };
+
+  const gotoPosts = () => {
+    const url = `/user/${props.user.id}/posts`;
+    history.push(url);
+  };
+
   return (
     <IonCol size="6">
-      <IonCard className="user-list-item" onClick={props.clickHandler}>
+      <IonCard className="user-list-item">
         <IonCardHeader>
-          <IonCardSubtitle color="secondry">
-            {props.user.username} {props.user.email}
-          </IonCardSubtitle>
-          <IonCardTitle color="danger">{props.user.name}</IonCardTitle>
+          <IonCardTitle color="danger">
+            {props.user.name} <IonNote color="secondary">{props.user.username}</IonNote>
+          </IonCardTitle>
         </IonCardHeader>
-
         <IonCardContent>
           <p>Phone: {props.user.phone} </p>
-          <p>Website: {props.user.website} </p>
+          <p>Web-site: {props.user.website} </p>
+          <p>E-mail: {props.user.email} </p>
         </IonCardContent>
-        <IonItem className="ion-activated">
+        <IonItem>
           <IonIcon icon={locationOutline} slot="start" />
           <IonLabel>
             {props.user.address.city} {props.user.address.zipcode}
           </IonLabel>
         </IonItem>
-
         <IonItem>
           <IonIcon icon={businessOutline} slot="start" />
           <IonLabel>{props.user.company.name}</IonLabel>
         </IonItem>
+        <IonRow>
+          <IonCol className="nav-col" onClick={gotoTodos}>
+            <IonIcon className="nav-icon" icon={checkmarkDoneOutline} />
+            Todos
+          </IonCol>
+          <IonCol className="nav-col" onClick={gotoPosts}>
+            <IonIcon className="nav-icon" icon={sendOutline} />
+            Posts
+          </IonCol>
+          <IonCol className="nav-col" onClick={gotoAlbums}>
+            <IonIcon className="nav-icon" icon={albumsOutline} />
+            Albums
+          </IonCol>
+        </IonRow>
       </IonCard>
     </IonCol>
   );
