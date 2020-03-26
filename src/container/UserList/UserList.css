@@ -1,4 +1,17 @@
-.user-list-item:hover {
-  box-shadow: 1px 1px 1px 1px rgba(228, 73, 73, 0.774);
+.user-list-item .nav-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: var(--ion-color-primary);
   cursor: pointer;
+}
+
+.user-list-item .nav-col:hover {
+  color: var(--ion-color-danger);
+}
+
+.user-list-item .nav-icon {
+  padding: 10px;
+  font-size: 25px;
 }
