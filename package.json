@@ -12,8 +12,7 @@
     "@types/node": "^12.12.24",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
-    "@types/react-router": "^5.1.4",
-    "@types/react-router-dom": "^5.1.3",
+    "axios": "^0.19.2",
     "ionicons": "^5.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -43,5 +42,10 @@
       "last 1 safari version"
     ]
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/react-router": "^5.1.4",
+    "@types/react-router-dom": "^5.1.3"
+  }
 }
