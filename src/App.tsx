@@ -1,6 +1,7 @@
 import React from 'react';
-import { Redirect, Route, BrowserRouter } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,18 +28,16 @@ import AlbumPage from './pages/AlbumPage';
 
 const App: React.FC = () => (
   <IonApp>
-    {/* <IonReactRouter> */}
-    <IonRouterOutlet>
-      <BrowserRouter>
+    <IonReactRouter>
+      <IonRouterOutlet>
         <Route path="/user/:id/todos" component={TodoPage} />
         <Route path="/user/:id/posts" component={PostPage} />
         <Route path="/user/:id/albums" component={AlbumPage} />
         <Route path="/home" component={Home} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
         {/* <Redirect to="/error" /> */}
-      </BrowserRouter>
-    </IonRouterOutlet>
-    {/* </IonReactRouter> */}
+      </IonRouterOutlet>
+    </IonReactRouter>
   </IonApp>
 );
 
