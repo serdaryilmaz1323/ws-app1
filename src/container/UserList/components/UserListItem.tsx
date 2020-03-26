@@ -39,7 +39,7 @@ const UserListItem = (props: Props) => {
   };
 
   return (
-    <IonCol size="6">
+    <IonCol sizeXs="12" sizeSm="9" sizeMd="6" sizeLg="4" sizeXl="4">
       <IonCard className="user-list-item">
         <IonCardHeader>
           <IonCardTitle color="danger">
