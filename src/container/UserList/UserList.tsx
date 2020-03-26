@@ -1,10 +1,10 @@
 import './UserList.css';
 import React, { useState, useEffect } from 'react';
-import { IonList, IonGrid, IonRow } from '@ionic/react';
 import { IUser } from '../../api/models/user.model';
 import { UserService } from '../../api/services/user.service';
 import UserListItem from './components/UserListItem';
 import Loading from '../../components/Loading';
+import GridLayout from '../../layout/GridLayout';
 
 type State = {
   userList: IUser[];
@@ -26,13 +26,11 @@ const UserList = () => {
   return state.loading ? (
     <Loading />
   ) : (
-    <IonGrid>
-      <IonRow>
-        {state.userList.map(item => (
-          <UserListItem key={item.id} user={item} />
-        ))}
-      </IonRow>
-    </IonGrid>
+    <GridLayout>
+      {state.userList.map(item => (
+        <UserListItem key={item.id} user={item} />
+      ))}
+    </GridLayout>
   );
 };
 
