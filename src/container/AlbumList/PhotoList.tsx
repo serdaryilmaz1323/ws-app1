@@ -13,7 +13,7 @@ type State = {
   view: 'grid' | 'slide';
 };
 const PhotoList = (props: Props) => {
-  const [state, setState] = useState<State>({ loading: true, photoList: [], view: 'slide' });
+  const [state, setState] = useState<State>({ loading: true, photoList: [], view: 'grid' });
 
   useEffect(() => {
     let cancel = false;
