@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import {
   IonPage,
   IonHeader,
@@ -10,6 +10,7 @@ import {
   IonList,
   IonModal,
   IonCol,
+  IonSearchbar,
 } from '@ionic/react';
 import Loading from '../components/Loading';
 import AlbumListItem from '../container/AlbumList/AlbumListItem';
@@ -26,6 +27,7 @@ type State = {
   loading: boolean;
   openModal: boolean;
   selectedAlbumId?: number;
+  searchTerm: string;
 };
 
 const initialState: State = {
@@ -34,6 +36,7 @@ const initialState: State = {
   loading: true,
   openModal: false,
   selectedAlbumId: undefined,
+  searchTerm: '',
 };
 
 const AlbumPage = () => {
@@ -90,15 +93,25 @@ const AlbumPage = () => {
         {state.loading ? (
           <Loading />
         ) : (
-          <GridLayout>
-            <IonCol sizeXs="12" sizeSm="12" sizeMd="11" sizeLg="10" sizeXl="8">
-              <IonList>
-                {state.albumList.map(item => (
-                  <AlbumListItem key={item.id} album={item} itemClicked={() => handleItemClicked(item.id)} />
-                ))}
-              </IonList>
-            </IonCol>
-          </GridLayout>
+          <Fragment>
+            <IonSearchbar
+              value={state.searchTerm}
+              onIonChange={e => setState({ ...state, searchTerm: e.detail.value! })}
+            ></IonSearchbar>
+            <GridLayout>
+              <IonCol sizeXs="12" sizeSm="12" sizeMd="11" sizeLg="10" sizeXl="8">
+                <IonList>
+                  {state.albumList.map(item => {
+                    if (item.title.includes(state.searchTerm)) {
+                      return (
+                        <AlbumListItem key={item.id} album={item} itemClicked={() => handleItemClicked(item.id)} />
+                      );
+                    }
+                  })}
+                </IonList>
+              </IonCol>
+            </GridLayout>
+          </Fragment>
         )}
       </IonContent>
     </IonPage>
