@@ -25,12 +25,14 @@ import './theme/variables.css';
 import TodoPage from './pages/TodoPage';
 import PostPage from './pages/PostPage';
 import AlbumPage from './pages/AlbumPage';
+import PostDetailPage from './pages/PostDetailPage';
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
         <Route path="/user/:id/todos" component={TodoPage} />
+        <Route path="/user/:id/posts/:postId" component={PostDetailPage} exact />
         <Route path="/user/:id/posts" component={PostPage} />
         <Route path="/user/:id/albums" component={AlbumPage} />
         <Route path="/home" component={Home} exact={true} />
