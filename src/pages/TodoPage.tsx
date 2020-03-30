@@ -1,46 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch, useHistory } from 'react-router';
-import { UserService } from '../api/services/user.service';
-import { ITodo } from '../api/models/todo.model';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton } from '@ionic/react';
-import { TodoService } from '../api/services/todo.service';
 import TodoList from '../container/TodoList/TodoList';
-
-type State = {
-  todoList: ITodo[];
-  title: string;
-  loading: boolean;
-};
-
-const initialState: State = { todoList: [], title: 'Todos', loading: true };
+import { useTypeSelector } from '../redux/helper/selector.helper';
+import { useDispatch } from 'react-redux';
+import { UserActions } from '../redux/user/action';
 
 const TodoPage = () => {
-  const [state, setState] = useState<State>(initialState);
-  const history = useHistory();
+  const dispatch = useDispatch();
+  const { selectedUser } = useTypeSelector(s => s.userState);
+  const [title, setTitle] = useState('Todos');
   const routeMatch = useRouteMatch<{ id?: string }>();
   const userId = Number(routeMatch.params.id);
-  console.log(state);
 
   useEffect(() => {
-    let cancel = false;
-
-    UserService.getUserById(userId).then(user => {
-      if (cancel) return;
-
-      if (!user) history.push('/error');
-
-      TodoService.fetchTodoList(userId).then(response => {
-        if (cancel) return;
-
-        setState({ ...state, todoList: response, title: `Todos of ${user?.name}`, loading: false });
-      });
-    });
-
-    return () => {
-      cancel = true;
-    };
-    //eslint-disable-next-line
-  }, []);
+    if (selectedUser) {
+      setTitle(`Todos of ${selectedUser?.name}`);
+    } else {
+      if (!!userId) {
+        dispatch(UserActions.selectUser(userId));
+      }
+      setTitle('Todos');
+    }
+  }, [selectedUser]);
 
   return (
     <IonPage>
@@ -49,7 +31,7 @@ const TodoPage = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/" />
           </IonButtons>
-          <IonTitle>{state.title}</IonTitle>
+          <IonTitle>{title}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

@@ -15,6 +15,8 @@ import { checkmarkDoneOutline, sendOutline, albumsOutline } from 'ionicons/icons
 import { locationOutline, businessOutline } from 'ionicons/icons';
 import { IUser } from '../../../api/models/user.model';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { UserActions } from '../../../redux/user/action';
 
 type Props = {
   user: IUser;
@@ -22,6 +24,7 @@ type Props = {
 
 const UserListItem = (props: Props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const gotoTodos = () => {
     const url = `/user/${props.user.id}/todos`;
@@ -38,9 +41,13 @@ const UserListItem = (props: Props) => {
     history.push(url);
   };
 
+  const selectUser = () => {
+    dispatch(UserActions.selectUser(props.user.id));
+  };
+
   return (
     <IonCol sizeXs="12" sizeSm="9" sizeMd="6" sizeLg="4" sizeXl="4">
-      <IonCard className="user-list-item">
+      <IonCard className="user-list-item" onClick={selectUser}>
         <IonCardHeader>
           <IonCardTitle color="danger">
             {props.user.name} <IonNote color="secondary">{props.user.username}</IonNote>
