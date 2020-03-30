@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRouteMatch, useHistory } from 'react-router';
+import { useRouteMatch } from 'react-router';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton } from '@ionic/react';
 import TodoList from '../container/TodoList/TodoList';
 import { useTypeSelector } from '../redux/helper/selector.helper';
@@ -22,6 +22,7 @@ const TodoPage = () => {
       }
       setTitle('Todos');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUser]);
 
   return (
