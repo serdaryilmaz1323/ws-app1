@@ -1,33 +1,18 @@
 import './UserList.css';
-import React, { useState, useEffect } from 'react';
-import { IUser } from '../../api/models/user.model';
-import { UserService } from '../../api/services/user.service';
+import React from 'react';
 import UserListItem from './components/UserListItem';
 import Loading from '../../components/Loading';
 import GridLayout from '../../layout/GridLayout';
-
-type State = {
-  userList: IUser[];
-  loading: boolean;
-};
-
-const initialState: State = { userList: [], loading: true };
+import { useTypeSelector } from '../../redux/helper/selector.helper';
 
 const UserList = () => {
-  const [state, setState] = useState<State>(initialState);
+  const { loading, users: userList } = useTypeSelector(s => s.userState);
 
-  useEffect(() => {
-    UserService.fetchUserList().then(response => {
-      setState({ userList: response, loading: false });
-      console.log(response);
-    });
-  }, []);
-
-  return state.loading ? (
+  return loading ? (
     <Loading />
   ) : (
     <GridLayout>
-      {state.userList.map(item => (
+      {userList.map(item => (
         <UserListItem key={item.id} user={item} />
       ))}
     </GridLayout>
