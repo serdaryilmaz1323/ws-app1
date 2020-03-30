@@ -6,14 +6,14 @@ export type UserStateType = {
   error: string | null;
   loading: boolean;
   users: IUser[];
-  selectedUser: IUser | null;
+  selectedUserId?: number;
+  selectedUser?: IUser;
 };
 
 const initialState: UserStateType = {
   error: null,
   loading: false,
   users: [],
-  selectedUser: null,
 };
 
 export const userReducer: Reducer<UserStateType, UserActionFuncType> = (
@@ -26,11 +26,29 @@ export const userReducer: Reducer<UserStateType, UserActionFuncType> = (
     }
     case UserActionType.GET_LIST_SUCCESS: {
       const { users } = action.payload;
-      return { ...state, loading: false, users: [...users], error: null };
+      let selectedUser: IUser | undefined = undefined;
+
+      if (state.selectedUserId) {
+        selectedUser = users.find(u => u.id === state.selectedUserId);
+      }
+
+      return { ...state, loading: false, users: [...users], error: null, selectedUser };
     }
     case UserActionType.GET_LIST_ERROR: {
       const { message } = action.payload;
       return { ...state, loading: false, users: [], error: message };
+    }
+
+    case UserActionType.SELECT: {
+      const { id } = action.payload;
+      const users = [...state.users];
+      let selectedUser: IUser | undefined = undefined;
+
+      if (users.length > 0) {
+        selectedUser = users.find(u => u.id === state.selectedUserId);
+      }
+
+      return { ...state, selectedUser, selectedUserId: id };
     }
 
     default:
