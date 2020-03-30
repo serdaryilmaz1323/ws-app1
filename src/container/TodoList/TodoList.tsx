@@ -12,6 +12,7 @@ const TodoList = () => {
 
   useEffect(() => {
     dispatch(TodoActions.getList());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleToggleChecked = (id: number) => {
