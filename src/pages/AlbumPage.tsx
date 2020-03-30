@@ -101,13 +101,13 @@ const AlbumPage = () => {
             <GridLayout>
               <IonCol sizeXs="12" sizeSm="12" sizeMd="11" sizeLg="10" sizeXl="8">
                 <IonList>
-                  {state.albumList.map(item => {
-                    if (item.title.includes(state.searchTerm)) {
+                  {state.albumList
+                    .filter(x => x.title.includes(state.searchTerm))
+                    .map(item => {
                       return (
                         <AlbumListItem key={item.id} album={item} itemClicked={() => handleItemClicked(item.id)} />
                       );
-                    }
-                  })}
+                    })}
                 </IonList>
               </IonCol>
             </GridLayout>
