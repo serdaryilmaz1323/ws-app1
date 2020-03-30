@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
@@ -26,21 +27,24 @@ import TodoPage from './pages/TodoPage';
 import PostPage from './pages/PostPage';
 import AlbumPage from './pages/AlbumPage';
 import PostDetailPage from './pages/PostDetailPage';
+import { configureStore } from './redux/store';
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/user/:id/todos" component={TodoPage} />
-        <Route path="/user/:id/posts/:postId" component={PostDetailPage} exact />
-        <Route path="/user/:id/posts" component={PostPage} />
-        <Route path="/user/:id/albums" component={AlbumPage} />
-        <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-        {/* <Redirect to="/error" /> */}
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+  <Provider store={configureStore()}>
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path="/user/:id/todos" component={TodoPage} />
+          <Route path="/user/:id/posts/:postId" component={PostDetailPage} exact />
+          <Route path="/user/:id/posts" component={PostPage} />
+          <Route path="/user/:id/albums" component={AlbumPage} />
+          <Route path="/home" component={Home} exact={true} />
+          <Route exact path="/" render={() => <Redirect to="/home" />} />
+          {/* <Redirect to="/error" /> */}
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  </Provider>
 );
 
 export default App;
