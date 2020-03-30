@@ -10,6 +10,7 @@ const AppInit = () => {
   useEffect(() => {
     dispatch(UserActions.getList());
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
